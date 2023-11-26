@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "# #"
+  ],
+  "key": {
+    "#": {
+      "tag": "minecraft:dark_oak_logs"
+    }
+  },
+  "result": {
+    "item": "minilogpiles:dark_oak_mini_log_pile",
+    "count": 1
+  }
+}

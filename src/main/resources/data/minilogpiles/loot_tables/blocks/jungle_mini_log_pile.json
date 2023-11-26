@@ -1,0 +1,62 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "minilogpiles:jungle_mini_log_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "stage": "1"
+                  }
+                }
+              ],
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "minilogpiles:jungle_mini_log_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "stage": "2"
+                  }
+                }
+              ],
+              "count": 2.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "minilogpiles:jungle_mini_log_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "stage": "3"
+                  }
+                }
+              ],
+              "count": 3.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:explosion_decay"
+            }
+          ],
+          "name": "minilogpiles:jungle_mini_log_pile"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

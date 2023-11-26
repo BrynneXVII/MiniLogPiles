@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "# #"
+  ],
+  "key": {
+    "#": {
+      "tag": "minecraft:mangrove_logs"
+    }
+  },
+  "result": {
+    "item": "minilogpiles:mangrove_mini_log_pile",
+    "count": 1
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "minilogpiles:oak_mini_log_pile",
+    "minilogpiles:spruce_mini_log_pile",
+    "minilogpiles:dark_oak_mini_log_pile",
+    "minilogpiles:birch_mini_log_pile",
+    "minilogpiles:jungle_mini_log_pile",
+    "minilogpiles:acacia_mini_log_pile",
+    "minilogpiles:mangrove_mini_log_pile",
+    "minilogpiles:crimson_mini_log_pile",
+    "minilogpiles:warped_mini_log_pile"
+  ]
+}

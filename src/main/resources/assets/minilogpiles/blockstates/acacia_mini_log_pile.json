@@ -1,0 +1,67 @@
+{
+  "variants": {
+    "facing=east,stage=0": {
+      "model": "minilogpiles:block/acacia_axe_woodstack",
+      "y": 90
+    },
+    "facing=north,stage=0": {
+      "model": "minilogpiles:block/acacia_axe_woodstack"
+    },
+    "facing=south,stage=0": {
+      "model": "minilogpiles:block/acacia_axe_woodstack",
+      "y": 180
+    },
+    "facing=west,stage=0": {
+      "model": "minilogpiles:block/acacia_axe_woodstack",
+      "y": 270
+    },
+
+    "facing=east,stage=1": {
+      "model": "minilogpiles:block/acacia_small_woodstack",
+      "y": 90
+    },
+    "facing=north,stage=1": {
+      "model": "minilogpiles:block/acacia_small_woodstack"
+    },
+    "facing=south,stage=1": {
+      "model": "minilogpiles:block/acacia_small_woodstack",
+      "y": 180
+    },
+    "facing=west,stage=1": {
+      "model": "minilogpiles:block/acacia_small_woodstack",
+      "y": 270
+    },
+
+    "facing=east,stage=2": {
+      "model": "minilogpiles:block/acacia_mid_woodstack",
+      "y": 90
+    },
+    "facing=north,stage=2": {
+      "model": "minilogpiles:block/acacia_mid_woodstack"
+    },
+    "facing=south,stage=2": {
+      "model": "minilogpiles:block/acacia_mid_woodstack",
+      "y": 180
+    },
+    "facing=west,stage=2": {
+      "model": "minilogpiles:block/acacia_mid_woodstack",
+      "y": 270
+    },
+
+    "facing=east,stage=3": {
+      "model": "minilogpiles:block/acacia_big_woodstack",
+      "y": 90
+    },
+    "facing=north,stage=3": {
+      "model": "minilogpiles:block/acacia_big_woodstack"
+    },
+    "facing=south,stage=3": {
+      "model": "minilogpiles:block/acacia_big_woodstack",
+      "y": 180
+    },
+    "facing=west,stage=3": {
+      "model": "minilogpiles:block/acacia_big_woodstack",
+      "y": 270
+    }
+  }
+}

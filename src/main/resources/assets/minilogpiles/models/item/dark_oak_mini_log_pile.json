@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "minilogpiles:item/dark_oak_mini_log_pile"
+  }
+}
