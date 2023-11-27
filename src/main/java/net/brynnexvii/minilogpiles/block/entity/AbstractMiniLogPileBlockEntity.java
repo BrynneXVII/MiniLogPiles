@@ -1,5 +1,6 @@
 package net.brynnexvii.minilogpiles.block.entity;
 
+import net.brynnexvii.minilogpiles.block.entity.specific.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -11,6 +12,10 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,6 +24,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import org.checkerframework.checker.units.qual.A;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,6 +39,18 @@ public abstract class AbstractMiniLogPileBlockEntity extends BlockEntity impleme
         @Override
         protected void onContentsChanged(int slot){
             setChanged();
+        }
+
+        @Override
+        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+            return switch (slot){
+                case 0 -> stack.is(AbstractMiniLogPileBlockEntity.this.getWoodBlock());
+                case 1 -> false;
+                case 2 -> false;
+                case 3 -> false;
+                case 4 -> false;
+                default -> super.isItemValid(slot, stack);
+            };
         }
     };
 
@@ -63,6 +81,28 @@ public abstract class AbstractMiniLogPileBlockEntity extends BlockEntity impleme
         };
     }
 
+    private Item getWoodBlock(){
+        if(this instanceof AcaciaMLPBlockEntity){
+            return Items.ACACIA_LOG;
+        } else if (this instanceof BirchMLPBlockEntity){
+            return Items.BIRCH_LOG;
+        } else if (this instanceof CrimsonMLPBlockEntity){
+            return Items.CRIMSON_STEM;
+        } else if (this instanceof DarkOakMLPBlockEntity){
+            return Items.DARK_OAK_LOG;
+        } else if (this instanceof JungleMLPBlockEntity){
+            return Items.JUNGLE_LOG;
+        } else if (this instanceof MangroveMLPBlockEntity){
+            return Items.MANGROVE_LOG;
+        } else if (this instanceof OakMLPBlockEntity){
+            return Items.OAK_LOG;
+        } else if (this instanceof SpruceMLPBlockEntity){
+            return Items.SPRUCE_LOG;
+        } else if (this instanceof WarpedMLPBlockEntity){
+            return Items.WARPED_STEM;
+        }
+        return null;
+    }
 
     @Override
     public abstract Component getDisplayName();
