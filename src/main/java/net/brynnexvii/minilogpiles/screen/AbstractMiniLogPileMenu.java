@@ -1,42 +1,45 @@
 package net.brynnexvii.minilogpiles.screen;
 
 
-import net.brynnexvii.minilogpiles.block.MLPBlocks;
-import net.brynnexvii.minilogpiles.block.entity.MiniLogPileBlockEntity;
+import net.brynnexvii.minilogpiles.block.entity.AbstractMiniLogPileBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import org.jetbrains.annotations.Nullable;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.items.SlotItemHandler;
 import net.minecraft.world.level.Level;
 
-public class MiniLogPileMenu extends AbstractContainerMenu {
-    public final MiniLogPileBlockEntity blockEntity;
-    private final Level level;
+public abstract class AbstractMiniLogPileMenu extends AbstractContainerMenu {
+    public final AbstractMiniLogPileBlockEntity blockEntity;
+    protected final Level level;
     private final ContainerData data;
 
-    public MiniLogPileMenu(int id, Inventory inv, FriendlyByteBuf extraData){
-        this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(1));
+    public AbstractMiniLogPileMenu(MenuType<? extends AbstractMiniLogPileMenu> menuType, int id, Inventory inv, FriendlyByteBuf extraData){
+        this(menuType, id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(1));
     }
 
-    public MiniLogPileMenu(int id, Inventory inv, BlockEntity entity, ContainerData data){
-        super(, id);
-        checkContainerSize(inv, 1); //# is item stack handler size
-        blockEntity = (MiniLogPileBlockEntity) entity;
+    public AbstractMiniLogPileMenu(MenuType<? extends AbstractMiniLogPileMenu> menuType, int id, Inventory inv, BlockEntity entity, ContainerData data){
+        super(menuType, id);
+        checkContainerSize(inv, 5); //# is item stack handler size
+        blockEntity = (AbstractMiniLogPileBlockEntity) entity;
         this.level = inv.player.level;
         this.data = data;
 
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
-        //TBD ***
+        this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
+            this.addSlot(new SlotItemHandler(handler, 0, 80, 17)); //input
+            this.addSlot(new SlotItemHandler(handler, 1, 26, 53)); //log
+            this.addSlot(new SlotItemHandler(handler, 2, 62, 53)); //stripped log
+            this.addSlot(new SlotItemHandler(handler, 3, 98, 53)); //wood
+            this.addSlot(new SlotItemHandler(handler, 4, 134, 53)); //stripped wood
+        });
 
-    }
-
-    protected MiniLogPileMenu(@Nullable MenuType<?> pMenuType, int pContainerId) {
-        super(pMenuType, pContainerId);
+        addDataSlots(data);
     }
 
     // CREDIT GOES TO: diesieben07 | https://github.com/diesieben07/SevenCommons
@@ -55,7 +58,7 @@ public class MiniLogPileMenu extends AbstractContainerMenu {
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
-    private static final int TE_INVENTORY_SLOT_COUNT = 1;  // must be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 5;  // must be the number of slots you have!
 
     @Override
     public ItemStack quickMoveStack(Player playerIn, int index) {
@@ -91,21 +94,19 @@ public class MiniLogPileMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean stillValid(Player pPlayer) {
-        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), pPlayer, MLPBlocks.OAK_MINI_LOG_PILE.get()); //hard coded ***
-    }
+    public abstract boolean stillValid(Player pPlayer);
 
     private void addPlayerInventory(Inventory playerInventory){
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
-                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 86 + i * 18));
+                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18)); // -2 in y to line up?
             }
         }
     }
 
     private void addPlayerHotbar(Inventory playerInventory){
-        for (int i = 0; i < 3; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 144));
+        for (int i = 0; i < 9; ++i) {
+            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142)); // - 2 in y to line up?
         }
     }
 }

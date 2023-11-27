@@ -1,7 +1,7 @@
 package net.brynnexvii.minilogpiles.block;
 
-import net.brynnexvii.minilogpiles.block.entity.MLPBlockEntities;
-import net.brynnexvii.minilogpiles.block.entity.MiniLogPileBlockEntity;
+import net.brynnexvii.minilogpiles.block.entity.AbstractMiniLogPileBlockEntity;
+import net.brynnexvii.minilogpiles.block.entity.specific.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -11,7 +11,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -84,10 +83,11 @@ public class MiniLogPileBlock extends HorizontalDirectionalBlock implements Enti
                         stack.shrink(1);
                     }
                 }
-            } else if (stack.isEmpty()) {
+            } else {
                 BlockEntity entity = world.getBlockEntity(pos);
-                if(entity instanceof MiniLogPileBlockEntity) {
-                    NetworkHooks.openScreen(((ServerPlayer) player), ((MiniLogPileBlockEntity) entity), pos);
+                if(entity instanceof AbstractMiniLogPileBlockEntity) {
+                    NetworkHooks.openScreen(((ServerPlayer) player), ((AbstractMiniLogPileBlockEntity) entity), pos);
+                    return InteractionResult.sidedSuccess(!world.isClientSide());
                 } else {
                     throw new IllegalStateException("Our container provider is missing.");
                 }
@@ -130,8 +130,8 @@ public class MiniLogPileBlock extends HorizontalDirectionalBlock implements Enti
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if(pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity((pPos));
-            if(blockEntity instanceof MiniLogPileBlockEntity) {
-                ((MiniLogPileBlockEntity) blockEntity).drops();
+            if(blockEntity instanceof AbstractMiniLogPileBlockEntity) {
+                ((AbstractMiniLogPileBlockEntity) blockEntity).drops();
             }
         }
         super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
@@ -155,7 +155,28 @@ public class MiniLogPileBlock extends HorizontalDirectionalBlock implements Enti
     }
 
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state){
-            return new MiniLogPileBlockEntity(pos, state, this.WOOD_TYPE);
+        switch(this.WOOD_TYPE){
+            case "acacia":
+                return new AcaciaMLPBlockEntity(pos, state);
+            case "birch":
+                return new BirchMLPBlockEntity(pos, state);
+            case "crimson":
+                return new CrimsonMLPBlockEntity(pos, state);
+            case "dark_oak":
+                return new DarkOakMLPBlockEntity(pos, state);
+            case "jungle":
+                return new JungleMLPBlockEntity(pos, state);
+            case "mangrove":
+                return new MangroveMLPBlockEntity(pos, state);
+            case "oak":
+                return new OakMLPBlockEntity(pos, state);
+            case "spruce":
+                return new SpruceMLPBlockEntity(pos, state);
+            case "warped":
+                return new WarpedMLPBlockEntity(pos, state);
+            default:
+                throw new IllegalStateException("Unexpected value: " + this.WOOD_TYPE);
+        }
     }
 
 }

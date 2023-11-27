@@ -1,6 +1,5 @@
 package net.brynnexvii.minilogpiles.block.entity;
 
-import net.brynnexvii.minilogpiles.MiniLogPiles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -16,19 +15,21 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class MiniLogPileBlockEntity extends BlockEntity implements MenuProvider {
-    private final String WOOD_TYPE;
+public abstract class AbstractMiniLogPileBlockEntity extends BlockEntity implements MenuProvider {
     protected final ContainerData data;
     private int logAmount = 0;
+    private static final int MAX_STAGE_0_1 = 64*64;
+    private static final int MAX_STAGE_2 = MAX_STAGE_0_1*2;
+    private static final int MAX_STAGE_3 = MAX_STAGE_0_1*3;
 
-    private final ItemStackHandler itemHandler = new ItemStackHandler(1) { // may need to increase this to 1 input and 4 output (log, stripped, wood, stripped) ***
+    private final ItemStackHandler itemHandler = new ItemStackHandler(5) {
         @Override
         protected void onContentsChanged(int slot){
             setChanged();
@@ -37,14 +38,13 @@ public class MiniLogPileBlockEntity extends BlockEntity implements MenuProvider 
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
-    public MiniLogPileBlockEntity(BlockPos pPos, BlockState pBlockState, String woodType) {
-        super(MLPBlockEntities.MLP_BLOCK_ENTITY.get(), pPos, pBlockState); //hard coded to a generic? ***
-        this.WOOD_TYPE = woodType;
+    public AbstractMiniLogPileBlockEntity(BlockEntityType<? extends AbstractMiniLogPileBlockEntity> entity, BlockPos pPos, BlockState pBlockState) {
+        super(entity, pPos, pBlockState);
         this.data = new ContainerData() {
             @Override
             public int get(int pIndex) {
                 return switch (pIndex) {
-                    case 0 -> MiniLogPileBlockEntity.this.logAmount;
+                    case 0 -> AbstractMiniLogPileBlockEntity.this.logAmount;
                     default -> 0;
                 };
             }
@@ -52,7 +52,7 @@ public class MiniLogPileBlockEntity extends BlockEntity implements MenuProvider 
             @Override
             public void set(int pIndex, int pValue) {
                 switch (pIndex) {
-                    case 0 -> MiniLogPileBlockEntity.this.logAmount = pValue;
+                    case 0 -> AbstractMiniLogPileBlockEntity.this.logAmount = pValue;
                 };
             }
 
@@ -65,20 +65,16 @@ public class MiniLogPileBlockEntity extends BlockEntity implements MenuProvider 
 
 
     @Override
-    public Component getDisplayName() {
-        return Component.translatable("block." + MiniLogPiles.MODID + "." + this.WOOD_TYPE + "_mini_log_pile");
-    }
+    public abstract Component getDisplayName();
 
     @Nullable
     @Override
-    public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return
-    }
+    public abstract AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer);
 
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY){
-            return lazyItemHandler.cast();
+        if(cap == ForgeCapabilities.ITEM_HANDLER){
+            return this.lazyItemHandler.cast();
         }
         return super.getCapability(cap, side);
     }
@@ -86,31 +82,31 @@ public class MiniLogPileBlockEntity extends BlockEntity implements MenuProvider 
     @Override
     public void onLoad() {
         super.onLoad();
-        lazyItemHandler = LazyOptional.of(() -> itemHandler);
+        this.lazyItemHandler = LazyOptional.of(() -> this.itemHandler);
     }
 
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
-        lazyItemHandler.invalidate();
+        this.lazyItemHandler.invalidate();
     }
 
     @Override
     protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("inventory", itemHandler.serializeNBT());
+        pTag.put("inventory", this.itemHandler.serializeNBT());
         super.saveAdditional(pTag);
     }
 
     @Override
     public void load(CompoundTag pTag) {
         super.load(pTag);
-        itemHandler.deserializeNBT(pTag.getCompound("inventory"));
+        this.itemHandler.deserializeNBT(pTag.getCompound("inventory"));
     }
 
     public void drops() {
-        SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots()); //can adapt to suit this inventory ***
-        for(int i = 0; i< itemHandler.getSlots(); i++){
-            inventory.setItem(i, itemHandler.getStackInSlot(i));
+        SimpleContainer inventory = new SimpleContainer(this.itemHandler.getSlots()); //can adapt to suit this inventory ***
+        for(int i = 0; i< this.itemHandler.getSlots(); i++){
+            inventory.setItem(i, this.itemHandler.getStackInSlot(i));
         }
 
         Containers.dropContents(this.level, this.worldPosition, inventory);
