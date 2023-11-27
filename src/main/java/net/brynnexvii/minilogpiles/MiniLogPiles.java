@@ -2,6 +2,7 @@ package net.brynnexvii.minilogpiles;
 
 import com.mojang.logging.LogUtils;
 import net.brynnexvii.minilogpiles.block.MLPBlocks;
+import net.brynnexvii.minilogpiles.block.entity.MLPBlockEntities;
 import net.brynnexvii.minilogpiles.item.MLPItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.BlockItem;
@@ -50,6 +51,8 @@ public class MiniLogPiles
         MLPBlocks.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
         MLPItems.register(modEventBus);
+
+        MLPBlockEntities.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);

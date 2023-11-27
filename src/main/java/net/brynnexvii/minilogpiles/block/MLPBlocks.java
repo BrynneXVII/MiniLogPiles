@@ -20,23 +20,23 @@ public class MLPBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MiniLogPiles.MODID);
 
     public static final RegistryObject<Block> ACACIA_MINI_LOG_PILE = registerBlock("acacia_mini_log_pile",
-            () -> new MiniLogPileBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F).sound(SoundType.WOOD).requiresCorrectToolForDrops()));
+            () -> new MiniLogPileBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F).sound(SoundType.WOOD).requiresCorrectToolForDrops(), "acacia"));
     public static final RegistryObject<Block> BIRCH_MINI_LOG_PILE = registerBlock("birch_mini_log_pile",
-            () -> new MiniLogPileBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F).sound(SoundType.WOOD).requiresCorrectToolForDrops()));
+            () -> new MiniLogPileBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F).sound(SoundType.WOOD).requiresCorrectToolForDrops(), "birch"));
     public static final RegistryObject<Block> CRIMSON_MINI_LOG_PILE = registerBlock("crimson_mini_log_pile",
-            () -> new MiniLogPileBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F).sound(SoundType.WOOD).requiresCorrectToolForDrops()));
+            () -> new MiniLogPileBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F).sound(SoundType.WOOD).requiresCorrectToolForDrops(), "crimson"));
     public static final RegistryObject<Block> DARK_OAK_MINI_LOG_PILE = registerBlock("dark_oak_mini_log_pile",
-            () -> new MiniLogPileBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F).sound(SoundType.WOOD).requiresCorrectToolForDrops()));
+            () -> new MiniLogPileBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F).sound(SoundType.WOOD).requiresCorrectToolForDrops(), "dark_oak"));
     public static final RegistryObject<Block> JUNGLE_MINI_LOG_PILE = registerBlock("jungle_mini_log_pile",
-            () -> new MiniLogPileBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F).sound(SoundType.WOOD).requiresCorrectToolForDrops()));
+            () -> new MiniLogPileBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F).sound(SoundType.WOOD).requiresCorrectToolForDrops(), "jungle"));
     public static final RegistryObject<Block> MANGROVE_MINI_LOG_PILE = registerBlock("mangrove_mini_log_pile",
-            () -> new MiniLogPileBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F).sound(SoundType.WOOD).requiresCorrectToolForDrops()));
+            () -> new MiniLogPileBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F).sound(SoundType.WOOD).requiresCorrectToolForDrops(), "mangrove"));
     public static final RegistryObject<Block> OAK_MINI_LOG_PILE = registerBlock("oak_mini_log_pile",
-            () -> new MiniLogPileBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F).sound(SoundType.WOOD).requiresCorrectToolForDrops()));
+            () -> new MiniLogPileBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F).sound(SoundType.WOOD).requiresCorrectToolForDrops(), "oak"));
     public static final RegistryObject<Block> SPRUCE_MINI_LOG_PILE = registerBlock("spruce_mini_log_pile",
-            () -> new MiniLogPileBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F).sound(SoundType.WOOD).requiresCorrectToolForDrops()));
+            () -> new MiniLogPileBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F).sound(SoundType.WOOD).requiresCorrectToolForDrops(), "spruce"));
     public static final RegistryObject<Block> WARPED_MINI_LOG_PILE = registerBlock("warped_mini_log_pile",
-            () -> new MiniLogPileBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F).sound(SoundType.WOOD).requiresCorrectToolForDrops()));
+            () -> new MiniLogPileBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F).sound(SoundType.WOOD).requiresCorrectToolForDrops(), "warped"));
 
 
 
